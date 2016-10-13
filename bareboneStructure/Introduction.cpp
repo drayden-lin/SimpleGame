@@ -5,7 +5,7 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 	printf("init() Failed\n");
 	return false;
 	}*/
-	if (!loadMedia(renderer, "Data/.png")) {
+	if (!loadMedia(renderer, "Data/logo.png")) {
 		printf("[Introduction]loadMedia() Failed\n");
 		return false;
 	}
@@ -15,19 +15,28 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 	bool quit = false;
 
 	while (!quit) {
-		for (alpha; alpha<255; alpha + 10) {
-			// do the render work
-			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		//fade in
+		while (alpha<255) {
+			SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 			SDL_RenderClear(renderer);
-
 			SDL_SetTextureAlphaMod(introTexture, alpha);
-
 			SDL_RenderCopy(renderer, introTexture, NULL, NULL);
-
 			SDL_RenderPresent(renderer);
 			SDL_Delay(10);
+			alpha++;
+		}
+		//fade out
+		while (alpha>0) {
+			SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
+			SDL_RenderClear(renderer);
+			SDL_SetTextureAlphaMod(introTexture, alpha);
+			SDL_RenderCopy(renderer, introTexture, NULL, NULL);
+			SDL_RenderPresent(renderer);
+			SDL_Delay(5);
+			alpha--;
 		}
 		quit = true;
+		SDL_Delay(50);
 	}
 	free();
 	return true;
