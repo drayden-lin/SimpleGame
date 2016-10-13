@@ -2,9 +2,9 @@
 #include "Introduction.h"
 
 int main(int argc, char* argv[]) {
-
-	AlphaBlending ab;
-	ab.Main();
+	
+	Introduction ab;
+	ab.Run();
 
 	return 0;
 }
