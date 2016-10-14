@@ -13,8 +13,6 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 	Introduction ab;
-	ab.Run(gRenderer);
-
 	return 0;
 }
 
@@ -44,6 +42,9 @@ bool init() {
 		printf("IMG_Init() Failed\n");
 		return false;
 	}
-
+        if (!MIX_Init()){
+                printf("MIX_Init() Failed\n");
+                return false;
+        }
 	return true;
 }
