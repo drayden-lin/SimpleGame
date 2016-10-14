@@ -1,44 +1,44 @@
 #include "Introduction.h"
 
 bool Introduction::Run(SDL_Renderer* renderer) {
-	/*if (!init()) {
-	printf("init() Failed\n");
-	return false;
-	}*/
-	if (!loadMedia(renderer, "Data/logo.png")) {
+
+	if (!loadTexture(renderer, INTRO_TEXTURE)) {
 		printf("[Introduction]loadMedia() Failed\n");
 		return false;
 	}
 
-	SDL_Event event;
-	Uint8 alpha = 0;
-	bool quit = false;
+        if (!loadMusic(INTRO_MUSIC)){
+                printf("[Introduction]loadMusic() Failed\n");
+                return false;
+        }
 
-	while (!quit) {
-		//fade in
-		while (alpha<255) {
-			SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
-			SDL_RenderClear(renderer);
-			SDL_SetTextureAlphaMod(introTexture, alpha);
-			SDL_RenderCopy(renderer, introTexture, NULL, NULL);
-			SDL_RenderPresent(renderer);
-			SDL_Delay(10);
-			alpha++;
-		}
-		//fade out
-		while (alpha>0) {
-			SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
-			SDL_RenderClear(renderer);
-			SDL_SetTextureAlphaMod(introTexture, alpha);
-			SDL_RenderCopy(renderer, introTexture, NULL, NULL);
-			SDL_RenderPresent(renderer);
-			SDL_Delay(5);
-			alpha--;
-		}
-		quit = true;
-		SDL_Delay(50);
+	Uint8 alpha = 0;
+
+	//fade in
+        Mix_PlayMusic( introMusic, -1 );
+	while (alpha<255) {
+		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
+		SDL_RenderClear(renderer);
+		SDL_SetTextureAlphaMod(introTexture, alpha);
+		SDL_RenderCopy(renderer, introTexture, NULL, NULL);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(10);
+		alpha++;
 	}
-	free();
+	//fade out
+	while (alpha>0) {
+		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
+		SDL_RenderClear(renderer);
+		SDL_SetTextureAlphaMod(introTexture, alpha);
+		SDL_RenderCopy(renderer, introTexture, NULL, NULL);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(5);
+		alpha--;
+	}
+	SDL_Delay(50);
+
+	freeTexture();
+        freeMusic();
 	return true;
 }
 
@@ -49,11 +49,12 @@ Introduction::Introduction() {
 	textureHeight = 0;
 }
 Introduction::~Introduction() {
-	free();
+	freeTexture();
+        freeMusic();
 }
 
-bool Introduction::loadMedia(SDL_Renderer* renderer, std::string path) {
-	free();
+bool Introduction::loadTexture(SDL_Renderer* renderer, std::string path) {
+	freeTexture();
 	SDL_Surface* tempSurface = NULL;
 
 	tempSurface = IMG_Load(path.c_str());
@@ -75,11 +76,25 @@ void abTexture::setBlendMode(SDL_BlendMode blending) {
 SDL_SetTextureBlendMode(texture, blending);
 }
 */
-void Introduction::free() {
+void Introduction::freeTexture() {
 	if (!introTexture) {
 		SDL_DestroyTexture(introTexture);
 		introTexture = NULL;
 		textureWidth = 0;
 		textureHeight = 0;
 	}
+}
+
+void Introduction::freeMusic() {
+        if (!introMusic) {
+                Mix_FreeMusic(introMusic);
+                introMusic = NULL;
+        }
+}
+
+bool Introduction::loadMusic(std::string path){
+        freeMusic();
+        introMusic = Mix_LoadMUS(path.c_str());
+        return introMusic? true:false;
+
 }

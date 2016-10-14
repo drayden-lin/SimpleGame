@@ -7,12 +7,32 @@ SDL_Renderer* gRenderer;
 const int screenWidth = 640;
 const int screenHeight = 480;
 bool init();
+void close();
 
 int main(int argc, char* argv[]) {
 	if (!init()) {
+                printf("init() Failed\n");
 		return -1;
 	}
 	Introduction ab;
+        ab.Run(gRenderer);
+
+
+        bool quit = false;
+        SDL_Event eventQ;
+
+        while(!quit){
+                while(SDL_PollEvent(&eventQ) != 0){
+                        if(eventQ.type == SDL_QUIT){
+                                quit = true
+                        }
+                        //handles events       
+
+                }
+                //handles rendering
+
+        }
+
 	return 0;
 }
 
@@ -42,9 +62,20 @@ bool init() {
 		printf("IMG_Init() Failed\n");
 		return false;
 	}
-        if (!MIX_Init()){
-                printf("MIX_Init() Failed\n");
+        if (Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0){
+                printf("Mix_OpenAudio() Failed\n");
                 return false;
         }
 	return true;
+}
+
+void close(){
+        SDL_DestroyRenderer(gRenderer);
+        SDL_DestroyWindow(gWindow);
+        gWindow = NULL;
+        gRenderer = NULL;
+
+        Mix_Quit();
+        IMG_Quit();
+        SDL_Quit();
 }
