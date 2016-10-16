@@ -8,36 +8,42 @@ const int screenWidth = 640;
 const int screenHeight = 480;
 bool init();
 void close();
+int MainGameLoop();
 
 int main(int argc, char* argv[]) {
+	int ret = MainGameLoop();
+	return ret;
+}
+
+int MainGameLoop() {
 	if (!init()) {
-                printf("init() Failed\n");
+		printf("init() Failed\n");
 		return -1;
 	}
-	Introduction ab;
-        ab.Run(gRenderer);
+	Introduction intro;
+	intro.Run(gRenderer);
 
 
-        bool quit = false;
-        SDL_Event eventQ;
+	bool quit = false;
+	SDL_Event eventQ;
 
-        while(!quit){
-                while(SDL_PollEvent(&eventQ) != 0){
-                        if(eventQ.type == SDL_QUIT){
-                                quit = true
-                        }
-                        //handles events       
+	while (!quit) {
+		while (SDL_PollEvent(&eventQ) != 0) {
+			if (eventQ.type == SDL_QUIT) {
+				quit = true;
+			}
+			//handles events       
 
-                }
-                //handles rendering
+		}
+		//handles rendering
 
-        }
+	}
 
 	return 0;
 }
 
 bool init() {
-	if (SDL_Init(SDL_INIT_VIDEO)<0) {
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("SDL_Init() Failed\n");
 		return false;
 	}
@@ -62,20 +68,20 @@ bool init() {
 		printf("IMG_Init() Failed\n");
 		return false;
 	}
-        if (Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0){
-                printf("Mix_OpenAudio() Failed\n");
-                return false;
-        }
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+		printf("Mix_OpenAudio() Failed\n");
+		return false;
+	}
 	return true;
 }
 
-void close(){
-        SDL_DestroyRenderer(gRenderer);
-        SDL_DestroyWindow(gWindow);
-        gWindow = NULL;
-        gRenderer = NULL;
+void close() {
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gWindow = NULL;
+	gRenderer = NULL;
 
-        Mix_Quit();
-        IMG_Quit();
-        SDL_Quit();
+	Mix_Quit();
+	IMG_Quit();
+	SDL_Quit();
 }

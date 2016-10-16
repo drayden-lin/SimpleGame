@@ -14,13 +14,13 @@ public:
 	~Introduction();
 	bool Run(SDL_Renderer* renderer);
 	bool loadTexture(SDL_Renderer* renderer, std::string path);
-        bool loadMusic(std::string path);
+	bool loadMusic(std::string path);
 	void freeTexture();
-        void freeMusic();
+	void freeMusic();
 
 private:
 	int textureWidth;
 	int textureHeight;
 	SDL_Texture* introTexture;
-        Mix_Music* introMusic;
+	Mix_Music* introMusic;
 };

@@ -7,16 +7,16 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 		return false;
 	}
 
-        if (!loadMusic(INTRO_MUSIC)){
-                printf("[Introduction]loadMusic() Failed\n");
-                return false;
-        }
+	if (!loadMusic(INTRO_MUSIC)) {
+		printf("[Introduction]loadMusic() Failed\n");
+		return false;
+	}
 
 	Uint8 alpha = 0;
 
 	//fade in
-        Mix_PlayMusic( introMusic, -1 );
-	while (alpha<255) {
+	Mix_PlayMusic(introMusic, -1);
+	while (alpha < 255) {
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		SDL_RenderClear(renderer);
 		SDL_SetTextureAlphaMod(introTexture, alpha);
@@ -26,7 +26,7 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 		alpha++;
 	}
 	//fade out
-	while (alpha>0) {
+	while (alpha > 0) {
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		SDL_RenderClear(renderer);
 		SDL_SetTextureAlphaMod(introTexture, alpha);
@@ -36,9 +36,10 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 		alpha--;
 	}
 	SDL_Delay(50);
+	Mix_HaltMusic();
 
 	freeTexture();
-        freeMusic();
+	freeMusic();
 	return true;
 }
 
@@ -50,7 +51,7 @@ Introduction::Introduction() {
 }
 Introduction::~Introduction() {
 	freeTexture();
-        freeMusic();
+	freeMusic();
 }
 
 bool Introduction::loadTexture(SDL_Renderer* renderer, std::string path) {
@@ -86,15 +87,15 @@ void Introduction::freeTexture() {
 }
 
 void Introduction::freeMusic() {
-        if (!introMusic) {
-                Mix_FreeMusic(introMusic);
-                introMusic = NULL;
-        }
+	if (!introMusic) {
+		Mix_FreeMusic(introMusic);
+		introMusic = NULL;
+	}
 }
 
-bool Introduction::loadMusic(std::string path){
-        freeMusic();
-        introMusic = Mix_LoadMUS(path.c_str());
-        return introMusic? true:false;
+bool Introduction::loadMusic(std::string path) {
+	freeMusic();
+	introMusic = Mix_LoadMUS(path.c_str());
+	return introMusic ? true : false;
 
 }
