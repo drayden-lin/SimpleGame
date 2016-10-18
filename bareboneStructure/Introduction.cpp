@@ -35,7 +35,7 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 		SDL_Delay(5);
 		alpha--;
 	}
-	SDL_Delay(50);
+	SDL_Delay(100);
 	Mix_HaltMusic();
 
 	freeTexture();

@@ -52,7 +52,7 @@ bool init() {
 	}
 
 	gWindow = SDL_CreateWindow(
-		"Alpha Blending",
+		"Simple Game",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		screenWidth, screenHeight,
