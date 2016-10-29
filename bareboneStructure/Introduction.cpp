@@ -1,4 +1,4 @@
-#include "Introduction.h"
+#include "Includes\Introduction.h"
 
 bool Introduction::Run(SDL_Renderer* renderer) {
 
@@ -22,7 +22,6 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 		SDL_SetTextureAlphaMod(introTexture, alpha);
 		SDL_RenderCopy(renderer, introTexture, NULL, NULL);
 		SDL_RenderPresent(renderer);
-		SDL_Delay(10);
 		alpha++;
 	}
 	//fade out
@@ -32,7 +31,6 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 		SDL_SetTextureAlphaMod(introTexture, alpha);
 		SDL_RenderCopy(renderer, introTexture, NULL, NULL);
 		SDL_RenderPresent(renderer);
-		SDL_Delay(5);
 		alpha--;
 	}
 	SDL_Delay(100);

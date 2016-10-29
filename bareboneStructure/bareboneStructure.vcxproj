@@ -119,11 +119,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dot.cpp" />
     <ClCompile Include="Introduction.cpp" />
     <ClCompile Include="MainEntryPoint.cpp" />
+    <ClCompile Include="RenderTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Introduction.h" />
+    <ClInclude Include="Includes\Dot.h" />
+    <ClInclude Include="Includes\Introduction.h" />
+    <ClInclude Include="Includes\RenderTexture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

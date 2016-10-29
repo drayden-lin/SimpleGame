@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "Introduction.h"
+#include "Includes\Introduction.h"
+#include "Includes\Dot.h"
 
 
 SDL_Window* gWindow;
 SDL_Renderer* gRenderer;
+RenderTexture dotTexture;
 const int screenWidth = 640;
 const int screenHeight = 480;
 bool init();
@@ -20,9 +22,12 @@ int MainGameLoop() {
 		printf("init() Failed\n");
 		return -1;
 	}
+	// Declare Components
 	Introduction intro;
-	intro.Run(gRenderer);
+	Dot dot;
 
+	// Runs Introduction
+	intro.Run(gRenderer);
 
 	bool quit = false;
 	SDL_Event eventQ;
@@ -32,11 +37,19 @@ int MainGameLoop() {
 			if (eventQ.type == SDL_QUIT) {
 				quit = true;
 			}
-			//handles events       
-
+			// Handles component events       
+			dot.handleEvent(&eventQ);
 		}
-		//handles rendering
+		// Clears the screen
+		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(gRenderer);
+		// Update components
 
+		dot.move(screenWidth, screenHeight);
+		dot.render(&dotTexture, gRenderer);
+
+		// Update the screen
+		SDL_RenderPresent(gRenderer);
 	}
 
 	return 0;
@@ -61,7 +74,7 @@ bool init() {
 	if (!gWindow) {
 		return false;
 	}
-	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!gRenderer) return false;
 
 	if (!IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG) {
@@ -72,6 +85,8 @@ bool init() {
 		printf("Mix_OpenAudio() Failed\n");
 		return false;
 	}
+
+	dotTexture.loadTexture(gRenderer, "Data/dot.bmp");
 	return true;
 }
 
