@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Includes\Introduction.h"
 #include "Includes\Dot.h"
+#include "Includes\Menu.h"
 
 
 SDL_Window* gWindow;
@@ -25,6 +26,11 @@ int MainGameLoop() {
 	// Declare Components
 	Introduction intro;
 	Dot dot;
+	Menu menu;
+	if (!menu.init(gRenderer)) {
+		return false;
+	}
+	
 
 	// Runs Introduction
 	intro.Run(gRenderer);
@@ -39,6 +45,9 @@ int MainGameLoop() {
 			}
 			// Handles component events       
 			dot.handleEvent(&eventQ);
+			if (!menu.handleEvents(&eventQ, gRenderer)) {
+				quit = true;
+			}
 		}
 		// Clears the screen
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -87,6 +96,7 @@ bool init() {
 	}
 
 	dotTexture.loadTexture(gRenderer, "Data/dot.bmp");
+	
 	return true;
 }
 

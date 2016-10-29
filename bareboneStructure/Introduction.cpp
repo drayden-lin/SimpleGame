@@ -16,7 +16,7 @@ bool Introduction::Run(SDL_Renderer* renderer) {
 
 	//fade in
 	Mix_PlayMusic(introMusic, -1);
-	while (alpha < 255) {
+	while (alpha < 200) {
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		SDL_RenderClear(renderer);
 		SDL_SetTextureAlphaMod(introTexture, alpha);
