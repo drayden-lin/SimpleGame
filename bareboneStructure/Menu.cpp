@@ -25,16 +25,14 @@ bool Menu::init(SDL_Renderer* renderer) {
 }
 
 void Menu::render(SDL_Renderer* renderer) {
-	//if (!shouldRender)
-	//	return;
-	//SDL_RenderSetViewport(renderer, &MenuViewPort);
 	menuTexture.render(renderer, 0, 0);
 }
 
 bool Menu::handleEvents(SDL_Event* event, SDL_Renderer* renderer) {
 	if (event->type == SDL_KEYDOWN) {
+		// Escape(ESC) is pressed, we enter the menu loop to pause the game 
+		// and handle further events from there
 		if (event->key.keysym.sym == SDLK_ESCAPE && event->key.repeat == 0) {
-			//shouldRender = !shouldRender;
 			return menuLoop(event, renderer);
 		}
 	}
