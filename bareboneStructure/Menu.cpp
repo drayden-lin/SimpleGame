@@ -24,6 +24,7 @@ bool Menu::init(SDL_Renderer* renderer) {
 	return ret;
 }
 
+// Renders the Menu Texture
 void Menu::render(SDL_Renderer* renderer) {
 	menuTexture.render(renderer, 0, 0);
 }
@@ -38,6 +39,7 @@ bool Menu::handleEvents(SDL_Event* event, SDL_Renderer* renderer) {
 	}
 }
 
+// Menu Loop to pause the game and handle events during the pause
 bool Menu::menuLoop(SDL_Event* event, SDL_Renderer* renderer) {
 	bool quitLoop = false;
 	int cursorPosition = 0;
